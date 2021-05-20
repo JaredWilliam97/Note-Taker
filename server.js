@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const { json } = require("express");
+const { parse } = require("path");
 
 const app = express();
 const PORT = 8080;
@@ -20,6 +21,7 @@ app.post("/api/notes", (req, res) => {
   // const dbObj = JSON.parse(dbJson);
 
   const newNote = req.body;
+  newNote.id = dbJson.length > 0 ? dbJson[dbJson.length - 1].id + 1 : 1;
   console.log(newNote);
   dbJson.push(newNote);
   console.log(dbJson);
@@ -28,6 +30,18 @@ app.post("/api/notes", (req, res) => {
     console.log("Saved!");
     res.json(newNote);
   });
+});
+app.delete("/api/notes/:id", (req, res) => {
+  // i want to delete the notes i create in the array
+
+  // create the id waht is the next step???
+  const id = req.params.id;
+  console.log(typeof id);
+  //delete each note when clicked on
+  const dbJson = require("./db/db.json");
+  ////// we need to find the note
+  index = dbJson.findIndex((note) => note.id === parseInt(id));
+  console.log(index);
 });
 
 app.get("/notes", (req, res) => {
