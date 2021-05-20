@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const { json } = require("express");
 const { parse } = require("path");
+const { notStrictEqual } = require("assert");
 
 const app = express();
 const PORT = 8080;
@@ -42,6 +43,9 @@ app.delete("/api/notes/:id", (req, res) => {
   ////// we need to find the note
   index = dbJson.findIndex((note) => note.id === parseInt(id));
   console.log(index);
+  dbJson.splice(index, 1);
+
+  res.end();
 });
 
 app.get("/notes", (req, res) => {
