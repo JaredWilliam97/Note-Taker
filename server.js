@@ -6,6 +6,9 @@ const { json } = require("express");
 const app = express();
 const PORT = 8080;
 
+// Sets up the Express app to handle data parsing
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 //routes
 app.get("/api/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "db", "db.json"));
@@ -13,17 +16,13 @@ app.get("/api/notes", (req, res) => {
 
 app.post("/api/notes", (req, res) => {
   const dbJson = require("./db/db.json");
-
   console.log(dbJson);
-  const dbObj = JSON.parse(dbJson);
+  // const dbObj = JSON.parse(dbJson);
 
-  console.log(req.body);
   const newNote = req.body;
-
+  console.log(newNote);
   dbJson.push(newNote);
-  console.log("Updated:");
   console.log(dbJson);
-
   fs.writeFile("./db/db.json", JSON.stringify(dbJson), function (err) {
     if (err) throw err;
     console.log("Saved!");
