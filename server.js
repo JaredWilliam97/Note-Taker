@@ -41,6 +41,10 @@ app.delete("/api/notes/:id", (req, res) => {
   //delete each note when clicked on
   const dbJson = require("./db/db.json");
   ////// we need to find the note
+  // const dbJson = dbJson.filter((item) => item.id != idNum);
+  // fs.writeFile("./db/db.json", JSON.stringify(dbJson), function (err) {
+  //   if (err) throw err;
+  // });
   index = dbJson.findIndex((note) => note.id === parseInt(id));
   console.log(index);
   dbJson.splice(index, 1);
