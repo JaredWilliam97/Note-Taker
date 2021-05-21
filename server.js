@@ -36,20 +36,21 @@ app.delete("/api/notes/:id", (req, res) => {
   // i want to delete the notes i create in the array
 
   // create the id waht is the next step???
-  const id = req.params.id;
+  const idNum = req.params.id;
   console.log(typeof id);
   //delete each note when clicked on
   const dbJson = require("./db/db.json");
   ////// we need to find the note
-  // const dbJson = dbJson.filter((item) => item.id != idNum);
-  // fs.writeFile("./db/db.json", JSON.stringify(dbJson), function (err) {
-  //   if (err) throw err;
-  // });
-  index = dbJson.findIndex((note) => note.id === parseInt(id));
-  console.log(index);
-  dbJson.splice(index, 1);
+  const newObj = dbJson.filter((item) => item.id != idNum);
+  fs.writeFileSync("./db/db.json", JSON.stringify(newObj));
 
-  res.end();
+  newObj = JSON.parse(newObj);
+  // index = dbJson.findIndex((note) => note.id === parseInt(id));
+  // console.log(index);
+  // dbJson.splice(index, 1);
+
+  res.send(newObj);
+  // res.send("newOBJ");
 });
 
 app.get("/notes", (req, res) => {
